@@ -12,27 +12,58 @@
 
 #include "../includes/philo.h"
 
+
+//lock and then unlock chang the value for an int that will be used to check that all the threads has entered the simulation
+
+
+void	wait_for_all(t_simulation *sim)
+{
+	int				ready;
+	ready = 0;
+	
+
+	ft_mutex_handle(sim->stop, LOCK);
+	sim->is_ready++;
+	if (sim->is_ready == sim->philo_numbers)
+		ready = YES;
+	ft_mutex_handle(sim->stop, UNLOCK);
+	while (ready != sim->philo_numbers)
+		;
+	ft_mutex_handle(sim->stop, LOCK);
+	printf("philos  %d are ready\n", sim->is_ready);
+	ft_mutex_handle(sim->stop, UNLOCK);
+}
+
 void *thread_routine(void *data)
 {
 	t_philo			philo;
 	t_simulation	*sim;
 	
-	
 	philo = *(t_philo *)data;
 	sim = philo.simulation;
 
-	printf("\n\n\n philo number [%d]  in the simulation process\n\n\n", philo.id);
+	wait_for_all(sim);
+
+	printf("philo %d\n", philo.id);
+
+	// exit(1);
+	// printf("all ready %d # philo, starting simulation\n", sim->is_ready);
+	// exit(1);
+	// printf("philo id %d entered the simulation\n", philo.id);
 	while (1)
 	{
+
+		//first i need to sychronize all the philos to start eating at the same time
+
+		// wait_for_all(sim);
 		//&& philo.left_fork != philo.right_fork for only one philo
 		if (philo.id % 2 != 0)
 		{
-			printf("from simuylation  #%d\t eat counter = %d \n", philo.id, philo.eat_counter);
 			if (sim->forks[philo.left_fork].is_taken == NO)
 			{
 				ft_mutex_handle(&sim->forks[philo.left_fork].mutex, LOCK);
 				sim->forks[philo.left_fork].is_taken = YES;
-				ft_print_message(&philo, sim, FORK,sim->forks[philo.left_fork].fork_id);
+				ft_print_message(&philo, sim, FORK, sim->forks[philo.left_fork].fork_id);
 			}
 			// printf("philo id %d\t fork id %d\n",philo.id, sim->forks[philo.left_fork].fork_id); // we need to have some sort of a flag to check if the fork is available
 		}
@@ -48,47 +79,15 @@ void *thread_routine(void *data)
 		// 		}
 		// 	}
 		if (philo.id % 2 != 0)
+		{
 			ft_eating(&philo, sim);
+			//need to check if the philosopher is done eating to stop the simulation
+			// time to eat + time to sleep should be less than time to die 
+			ft_sleeping(&philo, sim);
+			ft_print_message(&philo, sim, THINKING, -1);
+		}
 	}
 
-	// // if (philo.id % 2 == 0 && philo.left_fork != philo.right_fork && sim->forks[philo.left_fork].is_taken == NO)
-	// else if (philo.id / 2 == 0 && philo.left_fork != philo.right_fork && sim->forks[philo.left_fork].is_taken == YES)
-	// {
-	// 	ft_mutex_handle(&sim->forks[philo.left_fork].mutex, LOCK);
-	// 	ft_print_message(&philo, sim, FORK);
-	// }
-	// else if (philo.id / 2 != 0 && philo.left_fork != philo.right_fork && sim->forks[philo.left_fork].is_taken == NO)
-	// {
-	// 	ft_mutex_handle(&sim->forks[philo.left_fork].mutex, LOCK);
-	// 	sim->forks[philo.left_fork].is_taken = YES;
-	// 	ft_print_message(&philo, sim, FORK);
-	// 	// printf("philo id %d\t fork id %d\n",philo.id, sim->forks[philo.left_fork].fork_id); // we need to have some sort of a flag to check if the fork is available
-	// }
-	// else
-	// {
-	// 	ft_mutex_handle(&sim->forks[philo.left_fork].mutex, LOCK);
-	// 	ft_print_message(&philo, sim, FORK);
-	// }
-	// 	// printf("philo id %d\t fork id %d\n",philo.id, sim->forks[philo.left_fork].fork_id); // we need to have some sort of a flag to check if the fork is available
-	// // while (1)
-	// // {
-	// // 	// if (philo.is_dead || philo.eat_counter >= sim->max_eat)  
-	// // 	// {
-	// // 	// 	ft_mutex_handle(sim->stop, LOCK);
-	// // 	// 	break;
-	// // 	// }
-	// // 	//lock right fork if available
-	// // 	if (philo.id % 2 == 0)
-	// // 	{
-	// // 		printf("sleeping");
-	// // 		usleep(1000); //sleep until the odds philos finish eating
-	// // 		//sleep until the odds philos finish eating
-	// // 	}
-	// // 	// ft_print_message(&philo, sim, FORK);
-	// // 	// ft_eating(&philo);
-	// // 	// ft_sleeping(&philo);
-	// // 	// ft_thinking(&philo);
-	// // }
 	return (NULL);
 }
 
@@ -108,16 +107,7 @@ void	ft_start_simulation(t_philo *philo, t_simulation *simulation)
 	
 	//1-if only one philosopher //should die after he's sleeping time and thinking time finishes
 	//3-create a monitor thread -> searching for dead philosophers
-	//4-sychronize the beginning of the simulation
-	//4.1 - create a mutex for each philosopher
-	//4.2 - create a mutex for each fork
-	//4.3 - create a mutex for the message
-	//4.4 - create a mutex for the death
-	//4.5 - create a mutex for the stop
-	//5- start the simulation
-	//6- join all threads
-	//	free all memory 
-	
+	//4-create a monitor thread -> searching for philosophers that have eaten the max number of times
 	int i;
 	
 
@@ -127,7 +117,8 @@ void	ft_start_simulation(t_philo *philo, t_simulation *simulation)
 	i = -1;
 	while (++i < simulation->philo_numbers)
 		ft_thread_handle(&simulation->threads[i], CREATE, (void *)thread_routine, &philo[i]);
-	// i = -1;
+	i = -1;
 	while (++i < simulation->philo_numbers)
 		ft_thread_handle(&simulation->threads[i], JOIN, NULL, NULL);
 }
+

@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:25:22 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/19 15:17:30 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:47:37 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void		ft_print_message(t_philo *philo, t_simulation *simulation, int opcode, int
 {
 	
 	ft_mutex_handle(simulation->message, LOCK);
-	// if (opcode == DIED || opcode == DONE)
-	// {
-	// 	ft_mutex_handle(simulation->stop, LOCK);
-	// 	printf("time: %lld philo.id %d %s\n", ft_get_time() - simulation->start, philo->id, ft_message(opcode));
-	// 	ft_mutex_handle(simulation->stop, UNLOCK);
-	// 	exit (1);
-	// }
-	// else
+	if (opcode == DIED || opcode == DONE)
+	{
+		ft_mutex_handle(simulation->stop, LOCK);
+		printf("time: %lld philo.id %d %s\n", ft_get_time() - simulation->start, philo->id, ft_message(opcode));
+		ft_mutex_handle(simulation->stop, UNLOCK);
+		exit(1);
+	}
+	else
 	printf("\n\ntime: %lld philo.id %d %s  {%d} \n\n\n", ft_get_time() - simulation->start, philo->id, ft_message(opcode), fork_id);
 	ft_mutex_handle(simulation->message, UNLOCK);
 }
