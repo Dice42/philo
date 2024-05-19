@@ -13,27 +13,6 @@
 #include "../includes/philo.h"
 
 
-//lock and then unlock chang the value for an int that will be used to check that all the threads has entered the simulation
-
-
-void	wait_for_all(t_simulation *sim)
-{
-	int				ready;
-	ready = 0;
-	
-
-	ft_mutex_handle(sim->stop, LOCK);
-	sim->is_ready++;
-	if (sim->is_ready == sim->philo_numbers)
-		ready = YES;
-	ft_mutex_handle(sim->stop, UNLOCK);
-	while (ready != sim->philo_numbers)
-		;
-	ft_mutex_handle(sim->stop, LOCK);
-	printf("philos  %d are ready\n", sim->is_ready);
-	ft_mutex_handle(sim->stop, UNLOCK);
-}
-
 void *thread_routine(void *data)
 {
 	t_philo			philo;
@@ -41,8 +20,6 @@ void *thread_routine(void *data)
 	
 	philo = *(t_philo *)data;
 	sim = philo.simulation;
-
-	wait_for_all(sim);
 
 	printf("philo %d\n", philo.id);
 
