@@ -21,18 +21,9 @@ void *thread_routine(void *data)
 	philo = *(t_philo *)data;
 	sim = philo.simulation;
 
-	printf("philo %d\n", philo.id);
-
-	// exit(1);
-	// printf("all ready %d # philo, starting simulation\n", sim->is_ready);
-	// exit(1);
-	// printf("philo id %d entered the simulation\n", philo.id);
+	//while (simulation is not finished) // we need to have a flag to check if the simulation is finished
 	while (1)
 	{
-
-		//first i need to sychronize all the philos to start eating at the same time
-
-		// wait_for_all(sim);
 		//&& philo.left_fork != philo.right_fork for only one philo
 		if (philo.id % 2 != 0)
 		{
@@ -44,17 +35,6 @@ void *thread_routine(void *data)
 			}
 			// printf("philo id %d\t fork id %d\n",philo.id, sim->forks[philo.left_fork].fork_id); // we need to have some sort of a flag to check if the fork is available
 		}
-		// else if (philo.id % 2 == 0)
-		// 	{
-		// 		printf("sleeping %d\n", philo.id);
-		// 		sleep(100000); //sleep until the odds philos finish eating
-		// 		if (sim->forks[philo.left_fork].is_taken == NO)
-		// 		{
-		// 			ft_mutex_handle(&sim->forks[philo.left_fork].mutex, LOCK);
-		// 			sim->forks[philo.left_fork].is_taken = YES;
-		// 			ft_print_message(&philo, sim, FORK, sim->forks[philo.left_fork].fork_id);
-		// 		}
-		// 	}
 		if (philo.id % 2 != 0)
 		{
 			ft_eating(&philo, sim);
