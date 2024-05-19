@@ -6,11 +6,11 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:14:05 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/17 16:59:40 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:38:36 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 int	main(int ac, char **av)
 {

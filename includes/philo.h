@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/17 21:28:09 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:54:14 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_simulation
 
 typedef struct s_philo
 {
-	// pthread_mutex_t	*eat;
+	pthread_mutex_t	*eat;
 	unsigned int	eating_time;
 	unsigned int	next_meal;
 	int				id;
@@ -81,6 +81,8 @@ typedef struct s_philo
 	int				is_dead;
 	int				eat_counter;
 	int				max_eat;
+
+	//who picked it last
 	t_simulation	*simulation;
 }				t_philo;
 
@@ -105,12 +107,12 @@ t_fork			*ft_fork_init(t_simulation *simulation);
 
 //simulation
 void			ft_start_simulation(t_philo *philo, t_simulation *simulation);
-void			ft_print_message(t_philo *philo, t_simulation *simulation, int opcode);
+void			ft_print_message(t_philo *philo, t_simulation *simulation, int opcode, int fork_id);
 
 //Operations
-void			ft_thinking(t_philo *philo, t_simulation *sim);
-void			ft_sleeping(t_philo *philo, t_simulation *sim);
+void			ft_thinking(t_philo philo, t_simulation *sim);
+void			ft_sleeping(t_philo philo, t_simulation *sim);
 void			ft_eating(t_philo *philo, t_simulation *sim);
-bool			ft_isdead(t_philo *philo, t_simulation *sim);
+bool			ft_isdead(t_philo philo, t_simulation *sim);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:31 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/09 17:09:53 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:39:04 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 
 

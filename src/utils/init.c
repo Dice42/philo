@@ -6,11 +6,11 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/17 21:19:30 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:05:10 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../../includes/philo.h"
 /** still need work
  * @brief this function will assign the forks to the philo
  * 
@@ -87,7 +87,7 @@ t_fork	*ft_fork_init(t_simulation *simulation)
 	simulation->message = ft_save_malloc(sizeof(pthread_mutex_t));
 	// simulation->stop = ft_save_malloc(sizeof(pthread_mutex_t));
 	ft_mutex_handle(simulation->message, INIT);
-	// ft_mutex_handle(simulation->stop, INIT);
+	ft_mutex_handle(simulation->stop, INIT);
 	return (forks);
 }
  

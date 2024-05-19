@@ -6,11 +6,11 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:25:22 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/17 17:53:59 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:17:30 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../../includes/philo.h"
 
 char		*ft_message(int opcode)
 {
@@ -29,17 +29,19 @@ char		*ft_message(int opcode)
 	return (NULL);
 }
 
-void		ft_print_message(t_philo *philo, t_simulation *simulation, int opcode) // still need to add mutex for stop in to not get a mutex
+void		ft_print_message(t_philo *philo, t_simulation *simulation, int opcode, int fork_id) // still need to add mutex for stop in to not get a mutex
 {
+	
 	ft_mutex_handle(simulation->message, LOCK);
-	if (opcode == DIED || opcode == DONE)
-	{
-		ft_mutex_handle(simulation->stop, LOCK);
-		printf("time: %lld philo.id %d %s\n", ft_get_time() - simulation->start, philo->id, ft_message(opcode));
-		ft_mutex_handle(simulation->stop, UNLOCK);
-	}
-	else
-		printf("time: %lld philo.id %d %s number %d\n", ft_get_time() - simulation->start, philo->id, ft_message(opcode), simulation->forks[philo->left_fork].fork_id);
+	// if (opcode == DIED || opcode == DONE)
+	// {
+	// 	ft_mutex_handle(simulation->stop, LOCK);
+	// 	printf("time: %lld philo.id %d %s\n", ft_get_time() - simulation->start, philo->id, ft_message(opcode));
+	// 	ft_mutex_handle(simulation->stop, UNLOCK);
+	// 	exit (1);
+	// }
+	// else
+	printf("\n\ntime: %lld philo.id %d %s  {%d} \n\n\n", ft_get_time() - simulation->start, philo->id, ft_message(opcode), fork_id);
 	ft_mutex_handle(simulation->message, UNLOCK);
 }
 

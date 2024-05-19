@@ -6,19 +6,20 @@
 #    By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 14:12:50 by mohammoh          #+#    #+#              #
-#    Updated: 2024/05/17 17:34:41 by mohammoh         ###   ########.fr        #
+#    Updated: 2024/05/19 16:37:40 by mohammoh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRC = philo.c parsing.c utils.c init.c ft_atoi.c safe_handle.c simulation.c
+SRC = ./src/philo.c ./src/parsing.c ./src/safe_handle.c ./src/operations.c ./src/simulation.c \
+	 ./src/utils/utils.c ./src/utils/init.c ./src/utils/ft_atoi.c 
 
 OBJECTS = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g3 #-lpthread
+CFLAGS = -Wall -Wextra -Werror  -g3 -pthread -fsanitize=thread
 
 all: $(NAME)
 

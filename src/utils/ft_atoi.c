@@ -6,11 +6,11 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 22:47:52 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/04/22 23:09:29 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:37:30 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../../includes/philo.h"
 
 int	ft_str_is_numeric(char *str)
 {
