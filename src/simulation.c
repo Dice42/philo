@@ -72,7 +72,7 @@ void *thread_routine(void *data)
 	sim = philo.simulation;
 
 	// sync_threads(&philo, sim);
-	printf("Philo id %d is starting simulation\n", philo.id);
+	printf("Philo id %d is starting simulation\n", phimlo.id);
 
 	while (1)
 	{
