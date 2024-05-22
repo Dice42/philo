@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/19 22:40:56 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:54:29 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
 	int		fork_id; // for debugging
-	int		is_taken;
+	int 	last_picked;
 } t_fork;
 
 typedef struct s_simulation
@@ -57,7 +57,7 @@ typedef struct s_simulation
 	pthread_t			*threads;
 	t_fork				*forks;
 	pthread_mutex_t		*message;
-	// pthread_mutex_t		*death;
+	pthread_mutex_t		*death;
 	pthread_mutex_t		*stop;
 	long long		start;
 	int					philo_numbers;
@@ -67,19 +67,22 @@ typedef struct s_simulation
 	int					eat_counter;
 	int					max_eat;
 	int					is_dead;
+	int					all_ready;
 	int					is_ready; // to start the simulation
 	int					current_eat;
+	long long			*last_meal;
+	int					stop_simulation;
 }				t_simulation;
 
 typedef struct s_philo
 {
 	unsigned int	eating_time;
-	unsigned int	next_meal;
+	unsigned int	next_meal;	
 	int				id;
 	int				right_fork;
 	int				left_fork;
 	int				is_dead;
-	int				is_ready;
+	int				start;
 	int				eat_counter;
 	int				max_eat;
 
@@ -94,7 +97,8 @@ int				ft_parse(char **av, t_simulation *simulation);
 //utils
 void			ft_putstr_fd(char *s, int fd);
 long			ft_atoi(char *str);
-long long		ft_get_time(void);
+void			ft_usleep(int ms);
+long			ft_time(void);
 
 //safe handle
 void			ft_thread_handle(pthread_t *thread, t_opcode opcode , void *(*routine)(void *), void *arg);
@@ -108,12 +112,14 @@ t_fork			*ft_fork_init(t_simulation *simulation);
 
 //simulation
 void			ft_start_simulation(t_philo *philo, t_simulation *simulation);
+void			odd_thread_routine(t_philo *philo, t_simulation *sim);
+void			even_thread_routine(t_philo *philo, t_simulation *sim);
 void			ft_print_message(t_philo *philo, t_simulation *simulation, int opcode, int fork_id);
 
 //Operations
 void			ft_thinking(t_philo *philo, t_simulation *sim);
 void			ft_sleeping(t_philo *philo, t_simulation *sim);
 void			ft_eating(t_philo *philo, t_simulation *sim);
-bool			ft_isdead(t_philo *philo, t_simulation *sim);
+void			check_philosopher_deaths(t_simulation *sim);
 
 #endif

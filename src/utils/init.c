@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/19 21:25:34 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:35:41 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,16 @@ t_fork	*ft_fork_init(t_simulation *simulation)
 	while (i < simulation->philo_numbers)
 	{
 		forks[i].fork_id = i;
-		forks[i].is_taken = NO;
+		forks[i].last_picked = -1;
 		ft_mutex_handle(&forks[i].mutex, INIT);
 		i++;
 	}
 	simulation->message = ft_save_malloc(sizeof(pthread_mutex_t));
 	simulation->stop = ft_save_malloc(sizeof(pthread_mutex_t));
+	simulation->death = ft_save_malloc(sizeof(pthread_mutex_t));
 	ft_mutex_handle(simulation->message, INIT);
 	ft_mutex_handle(simulation->stop, INIT);
+	ft_mutex_handle(simulation->death, INIT);
 	return (forks);
 }
  

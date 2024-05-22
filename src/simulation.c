@@ -12,7 +12,57 @@
 
 #include "../includes/philo.h"
 
+static void	ft_get_even_forks(t_philo *philo, t_simulation *sim)
+{
+	t_fork		*forks;
 
+	forks = sim->forks;
+	ft_mutex_handle(&forks[philo->left_fork].mutex, LOCK);
+	ft_print_message(philo, sim, FORK, forks[philo->left_fork].fork_id);
+	forks[philo->left_fork].last_picked = philo->id;
+	ft_mutex_handle(&forks[philo->right_fork].mutex, LOCK);
+	ft_print_message(philo, sim, FORK, forks[philo->right_fork].fork_id);
+	forks[philo->right_fork].last_picked = philo->id;
+}
+
+static void	ft_get_odd_forks(t_philo *philo, t_simulation *sim)
+{
+	t_fork		*forks;
+
+	forks = sim->forks;
+	if ((philo->id) % 2 == 0 && forks[philo->right_fork].last_picked != philo->id 
+		&& forks[philo->left_fork].last_picked != philo->id)
+	{
+		ft_mutex_handle(&forks[philo->right_fork].mutex, LOCK);
+		ft_print_message(philo, sim, FORK, forks[philo->right_fork].fork_id);
+		forks[philo->right_fork].last_picked = philo->id;
+		ft_mutex_handle(&forks[philo->left_fork].mutex, LOCK);
+		ft_print_message(philo, sim, FORK, forks[philo->left_fork].fork_id);
+		forks[philo->left_fork].last_picked = philo->id;
+	}
+	else
+		ft_get_even_forks(philo, sim);
+}
+// static void	sync_threads(t_philo *philo, t_simulation *sim)
+// {
+// 	ft_mutex_handle(sim->stop, LOCK);
+// 	sim->is_ready++;
+// 	if (sim->is_ready == sim->philo_numbers)
+// 		sim->all_ready = YES;
+// 	printf("Philo id %d is ready\n", philo->id);
+// 	ft_mutex_handle(sim->stop, UNLOCK);
+// 	while (1)
+// 	{
+// 		ft_mutex_handle(sim->stop, LOCK);
+// 		if (sim->all_ready == YES)
+// 		{
+// 			ft_mutex_handle(sim->stop, UNLOCK);
+// 			break;
+// 		}
+// 		ft_mutex_handle(sim->stop, UNLOCK);
+// 		ft_usleep(100);
+// 	}
+// }
 void *thread_routine(void *data)
 {
 	t_philo			philo;
@@ -21,61 +71,49 @@ void *thread_routine(void *data)
 	philo = *(t_philo *)data;
 	sim = philo.simulation;
 
-	//while (simulation is not finished) // we need to have a flag to check if the simulation is finished
+	// sync_threads(&philo, sim);
+	printf("Philo id %d is starting simulation\n", philo.id);
+
 	while (1)
 	{
-		//&& philo.left_fork != philo.right_fork for only one philo
-		if (philo.id % 2 != 0)
+		ft_mutex_handle(sim->stop, LOCK);
+		if (sim->stop_simulation)
 		{
-			if (sim->forks[philo.left_fork].is_taken == NO)
-			{
-				ft_mutex_handle(&sim->forks[philo.left_fork].mutex, LOCK);
-				sim->forks[philo.left_fork].is_taken = YES;
-				ft_print_message(&philo, sim, FORK, sim->forks[philo.left_fork].fork_id);
-			}
-			// printf("philo id %d\t fork id %d\n",philo.id, sim->forks[philo.left_fork].fork_id); // we need to have some sort of a flag to check if the fork is available
+			ft_mutex_handle(sim->stop, UNLOCK);
+			break;
 		}
+		ft_mutex_handle(sim->stop, UNLOCK);
 		if (philo.id % 2 != 0)
-		{
-			ft_eating(&philo, sim);
-			//need to check if the philosopher is done eating to stop the simulation
-			// time to eat + time to sleep should be less than time to die 
-			ft_sleeping(&philo, sim);
-			ft_print_message(&philo, sim, THINKING, -1);
-		}
+			ft_get_odd_forks(&philo, sim);
+		// else
+		// 	ft_get_even_forks(&philo, sim);
+		ft_eating(&philo, sim);
+		ft_sleeping(&philo, sim);
+		ft_thinking(&philo, sim);
 	}
-
 	return (NULL);
-}
-
-long long ft_get_time(void)
-{
-	struct timeval time;
-
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
 void	ft_start_simulation(t_philo *philo, t_simulation *simulation)
 {
-	// unsigned int start_time;
-	simulation->start = ft_get_time();
-	// printf("starting time = [%lld]\n", simulation->start);
-	
-	//1-if only one philosopher //should die after he's sleeping time and thinking time finishes
-	//3-create a monitor thread -> searching for dead philosophers
-	//4-create a monitor thread -> searching for philosophers that have eaten the max number of times
+	pthread_t death_check_thread;
 	int i;
-	
 
+	death_check_thread= ft_save_malloc(sizeof(pthread_t));
+	simulation->start = ft_time();
+	simulation->last_meal = malloc(sizeof(long long) * simulation->philo_numbers);
 	i = -1;
 	while (++i < simulation->philo_numbers)
-		philo[i].simulation = simulation;
+	{
+		simulation->last_meal[i] = simulation->start;
+		 philo[i].simulation = simulation;
+	}
+	ft_thread_handle(&death_check_thread, CREATE, (void *)check_philosopher_deaths, simulation);
 	i = -1;
 	while (++i < simulation->philo_numbers)
 		ft_thread_handle(&simulation->threads[i], CREATE, (void *)thread_routine, &philo[i]);
 	i = -1;
 	while (++i < simulation->philo_numbers)
 		ft_thread_handle(&simulation->threads[i], JOIN, NULL, NULL);
+	ft_thread_handle(&death_check_thread, JOIN, NULL, NULL);
 }
-
