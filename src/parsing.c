@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:31 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/19 14:39:04 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:29:52 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int set_time_to_die(t_simulation *simulation, int num)
 {
 	if (num < 60)
 		return ft_panic("ERROR: Time to die cant be less than 60 ms\n", 1);
-	simulation->time_to_die = num * 1000;
+	simulation->time_to_die = num;
 	return 0;
 }
 
@@ -52,7 +52,7 @@ static int set_time_to_eat(t_simulation *simulation, int num)
 {
 	if (num < 60)
 		return ft_panic("ERROR: Time to eat cant be less than 60 ms\n", 1);
-	simulation->time_to_eat = num * 1000;
+	simulation->time_to_eat = num;
 	return 0;
 }
 
@@ -66,7 +66,7 @@ static int set_time_to_sleep(t_simulation *simulation, int num)
 {
 	if (num < 60)
 		return ft_panic("ERROR: Time to sleep cant be less than 60 ms\n", 1);
-	simulation->time_to_sleep = num * 1000;
+	simulation->time_to_sleep = num;
 	return 0;
 }
 

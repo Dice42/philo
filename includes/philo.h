@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/23 19:28:36 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:29:28 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ typedef struct s_simulation
 	pthread_mutex_t		*death;
 	pthread_mutex_t		*stop;
 	
-	long long		start;
+	size_t				start;
 	int					philo_numbers;
 	size_t				time_to_die;
 	size_t				time_to_eat;
-	size_t					time_to_sleep;
+	size_t				time_to_sleep;
 	int					eat_counter;
 	int					max_eat;
 	int					is_dead;
@@ -73,7 +73,7 @@ typedef struct s_simulation
 	int					all_ready;
 	int					is_ready; // to start the simulation
 	int					current_eat;
-	long long			*last_meal;
+	size_t			*last_meal;
 	int					stop_simulation;
 }				t_simulation;
 

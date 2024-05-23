@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:25:22 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/22 15:05:50 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:30:19 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void		ft_print_message(t_philo *philo, t_simulation *simulation, int opcode, int
 	if (opcode == DIED || opcode == DONE)
 	{
 		ft_mutex_handle(simulation->stop, LOCK);
-		printf("time: %lld philo.id %d %s\n", ft_time() - simulation->start, philo->id, ft_message(opcode));
+		printf("time: %lu philo.id %d %s\n", ft_time() - simulation->start, philo->id, ft_message(opcode));
 		ft_mutex_handle(simulation->stop, UNLOCK);
 		exit(1);
 	}
 	else
-	printf("\ntime: %lld philo.id %d %s  {%d} \n", ft_time() - simulation->start, philo->id, ft_message(opcode), fork_id);
+	printf("\ntime: %lu philo.id %d %s  {%d} \n", ft_time() - simulation->start, philo->id, ft_message(opcode), fork_id);
 	ft_mutex_handle(simulation->message, UNLOCK);
 }
 
