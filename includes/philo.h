@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/21 21:54:29 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:28:36 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_fork
 	pthread_mutex_t	mutex;
 	int		fork_id; // for debugging
 	int 	last_picked;
+	int		is_picked;
 } t_fork;
 
 typedef struct s_simulation
@@ -59,14 +60,16 @@ typedef struct s_simulation
 	pthread_mutex_t		*message;
 	pthread_mutex_t		*death;
 	pthread_mutex_t		*stop;
+	
 	long long		start;
 	int					philo_numbers;
-	int					time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
+	size_t				time_to_die;
+	size_t				time_to_eat;
+	size_t					time_to_sleep;
 	int					eat_counter;
 	int					max_eat;
 	int					is_dead;
+	int					start_flag;
 	int					all_ready;
 	int					is_ready; // to start the simulation
 	int					current_eat;
@@ -81,6 +84,8 @@ typedef struct s_philo
 	int				id;
 	int				right_fork;
 	int				left_fork;
+	int				has_both_forks;
+	int				has_eaten;
 	int				is_dead;
 	int				start;
 	int				eat_counter;
@@ -97,8 +102,8 @@ int				ft_parse(char **av, t_simulation *simulation);
 //utils
 void			ft_putstr_fd(char *s, int fd);
 long			ft_atoi(char *str);
-void			ft_usleep(int ms);
-long			ft_time(void);
+void			ft_usleep(size_t ms);
+size_t			ft_time(void);
 
 //safe handle
 void			ft_thread_handle(pthread_t *thread, t_opcode opcode , void *(*routine)(void *), void *arg);

@@ -26,22 +26,22 @@ void	ft_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
 {
 	if (opcode == INIT)
 	{
-		if (pthread_mutex_init(mutex, NULL) != 0)
+		if (pthread_mutex_init(mutex, NULL))
 			ft_panic("ERROR: MUTEX INIT FAILED\n", 0);
 	}
 	else if (opcode == DESTROY)
 	{
-		if (pthread_mutex_destroy(mutex) != 0)
+		if (pthread_mutex_destroy(mutex))
 			ft_panic("ERROR: MUTEX DESTROY FAILED\n", 0);
 	}
 	else if (opcode == LOCK)
 	{
-		if (pthread_mutex_lock(mutex) != 0)
+		if (pthread_mutex_lock(mutex))
 			ft_panic("ERROR: MUTEX LOCK FAILED\n", 0);
 	}
 	else if (opcode == UNLOCK)
 	{
-		if (pthread_mutex_unlock(mutex) != 0)
+		if (pthread_mutex_unlock(mutex))
 			ft_panic("ERROR: MUTEX UNLOCK FAILED\n", 0);
 	}
 }

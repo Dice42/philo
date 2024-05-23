@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:14:05 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/19 19:14:48 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:31:06 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	main(int ac, char **av)
 
 		//print all the simulation stucture compenent
 		printf("num of philo  [%d]\n", simulation.philo_numbers);
-		printf("time_to_die   [%dms]\n", simulation.time_to_die);
-		printf("time_to_eat   [%dms]\n", simulation.time_to_eat);
-		printf("time_to_sleep [%dms]\n", simulation.time_to_sleep);
+		printf("time_to_die   [%zums]\n", simulation.time_to_die);
+		printf("time_to_eat   [%zums]\n", simulation.time_to_eat);
+		printf("time_to_sleep [%zums]\n", simulation.time_to_sleep);
 		printf("max_eat       [%d]\n", simulation.max_eat);
 		printf("----------------------------------------\n" );
 		
@@ -51,9 +51,9 @@ int	main(int ac, char **av)
 		// // // 3- start simulation dining
 		ft_start_simulation(philo, &simulation);
 		printf("%d\n", simulation.philo_numbers);
-		printf("time_to_die   %dms\n", simulation.time_to_die);
-		printf("time_to_eat   %dms\n", simulation.time_to_eat);
-		printf("time_to_sleep %dms\n", simulation.time_to_sleep);
+		printf("time_to_die   %zums\n", simulation.time_to_die);
+		printf("time_to_eat   %zums\n", simulation.time_to_eat);
+		printf("time_to_sleep %zums\n", simulation.time_to_sleep);
 	}
 	else 
 		ft_putstr_fd("Error: wrong number of arguments\n", 2);

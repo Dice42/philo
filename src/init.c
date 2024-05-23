@@ -6,11 +6,11 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/22 15:35:41 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:28:06 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philo.h"
+#include "../includes/philo.h"
 /** still need work
  * @brief this function will assign the forks to the philo
  * 
@@ -52,6 +52,7 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 	simulation->forks = ft_fork_init(simulation);
 	philo = ft_save_malloc(sizeof(t_philo) * simulation->philo_numbers);
 	simulation->is_ready = 0;
+	simulation->start_flag = 0;
 	while (i < simulation->philo_numbers)
 	{
 		philo[i].id = i + 1;
@@ -59,6 +60,8 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 		philo[i].next_meal = 0; // NEXT MEAL
 		philo[i].eat_counter = 0;
 		philo[i].is_dead = NO;
+		philo[i].has_both_forks = NO;
+		philo[i].has_eaten = NO;
 		philo[i].max_eat = simulation->max_eat;
 		assing_forks(philo, simulation, i);
 		i++;
@@ -82,6 +85,7 @@ t_fork	*ft_fork_init(t_simulation *simulation)
 	{
 		forks[i].fork_id = i;
 		forks[i].last_picked = -1;
+		forks[i].is_picked = NO;
 		ft_mutex_handle(&forks[i].mutex, INIT);
 		i++;
 	}

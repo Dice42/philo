@@ -6,14 +6,14 @@
 #    By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 14:12:50 by mohammoh          #+#    #+#              #
-#    Updated: 2024/05/21 21:55:58 by mohammoh         ###   ########.fr        #
+#    Updated: 2024/05/23 17:04:22 by mohammoh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRC = ./src/philo.c ./src/parsing.c ./src/safe_handle.c ./src/operations.c ./src/simulation.c \
-	 ./src/utils/utils.c ./src/utils/init.c ./src/utils/ft_atoi.c ./src/utils/time.c
+	 ./src/utils/utils.c ./src/init.c ./src/utils/ft_atoi.c ./src/utils/time.c
 
 OBJECTS = $(SRC:.c=.o)
 
