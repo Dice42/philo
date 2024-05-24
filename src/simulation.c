@@ -83,14 +83,8 @@ static void	ft_get_forks(t_philo *philo, t_simulation *sim)
 	}
 	ft_get_forks2(first_fork, second_fork, philo, sim);
 }
-
-void *thread_routine(void *data)
+static void get_start_time(t_simulation *sim)
 {
-	t_philo			philo;
-	t_simulation	*sim;
-	
-	philo = *(t_philo *)data;
-	sim = philo.simulation;
 	ft_mutex_handle(sim->stop, LOCK);
 	if (sim->start_flag != 1)
 	{
@@ -98,19 +92,32 @@ void *thread_routine(void *data)
 		sim->start_flag = 1;
 	}
 	ft_mutex_handle(sim->stop, UNLOCK);
+}
+void *thread_routine(void *data)
+{
+	t_philo			philo;
+	t_simulation	*sim;
+
+	philo = *(t_philo *)data;
+	sim = philo.simulation;
+	get_start_time(sim);
+	ft_mutex_handle(sim->stop, UNLOCK);
 	while (1)
 	{
 		if (!ft_check_death_status(sim))
 			ft_get_forks(&philo, sim);
+		if (ft_check_death_status(sim))
+			return (NULL);
 		if (!ft_check_death_status(sim))
 			ft_eating(&philo);
 		if (philo.has_eaten == YES && !ft_check_death_status(sim))
 			ft_sleeping(&philo);
+		if (ft_check_death_status(sim))
+			return (NULL);
 		if (!ft_check_death_status(sim))
 			ft_thinking(&philo);
 		if (ft_check_death_status(sim))
 			return (NULL);
-
 	}
 	return (NULL);
 } 
@@ -125,7 +132,7 @@ void	ft_start_simulation(t_philo *philo, t_simulation *simulation)
 	while (++i < simulation->philo_numbers)
 	{
 		simulation->last_meal[i] = simulation->start;
-		 philo[i].simulation = simulation;
+		philo[i].simulation = simulation;
 	}
 	i = -1;
 	while (++i < simulation->philo_numbers)

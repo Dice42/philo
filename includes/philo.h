@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/24 23:21:27 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:37:11 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,17 @@ typedef struct s_simulation
 	int					is_dead;
 	int					start_flag;
 	int					current_eat;
-	size_t			*last_meal;
+	size_t				*last_meal;
 	int					stop_simulation;
 }				t_simulation;
 
 typedef struct s_philo
 {
-	unsigned int	eating_time;
-	unsigned int	next_meal;	
+	unsigned int	eating_time;	
 	int				id;
 	int				right_fork;
 	int				left_fork;
 	int				has_eaten;
-	int				is_dead;
 	int				start;
 	int				eat_counter;
 	int				max_eat;
@@ -95,13 +93,18 @@ typedef struct s_philo
 
 //parsing 
 int				ft_parse(char **av, t_simulation *simulation);
+int				set_philosophers(t_simulation *simulation, int num);
+int				set_time_to_die(t_simulation *simulation, int num);
+int				set_time_to_eat(t_simulation *simulation, int num);
+int				set_time_to_sleep(t_simulation *simulation, int num);
+int				set_max_eat(t_simulation *simulation, int num);
 
 //utils
 void			ft_putstr_fd(char *s, int fd);
 long			ft_atoi(char *str);
 void			ft_usleep(size_t ms, t_simulation *sim);
 size_t			ft_time(void);
-void			ft_free(t_simulation *sim, t_philo *philo);
+void			ft_free(t_simulation *sim);
 
 //safe handle
 void			ft_thread_handle(pthread_t *thread, t_opcode opcode , void *(*routine)(void *), void *arg);

@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/24 22:53:31 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:34:43 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	assing_forks(t_philo *philo, t_simulation *simulation, int i)
 		philo[i].right_fork = i;
 	}
 }
+
 /**
  * @brief this function will initialize the philo struct
  * 
@@ -42,9 +43,10 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 {
 	t_philo	*philo;
 	int		i;
-	
+
 	i = 0;
-	simulation->threads = ft_save_malloc(sizeof(pthread_t) * simulation->philo_numbers);
+	simulation->threads = ft_save_malloc(sizeof(pthread_t) 
+			* simulation->philo_numbers);
 	simulation->forks = ft_fork_init(simulation);
 	philo = ft_save_malloc(sizeof(t_philo) * simulation->philo_numbers);
 	simulation->start_flag = 0;
@@ -53,10 +55,7 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 	{
 		philo[i].id = i + 1;
 		philo[i].eating_time = simulation->time_to_eat;
-		philo[i].next_meal = 0; // NEXT MEAL
 		philo[i].eat_counter = 0;
-		philo[i].is_dead = NO;
-		// philo[i].has_both_forks = NO;
 		philo[i].has_eaten = NO;
 		philo[i].max_eat = simulation->max_eat;
 		assing_forks(philo, simulation, i);
@@ -64,6 +63,7 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 	}
 	return (philo);
 }
+
 /**
  * @brief this function will initialize the fork struct
  * 
@@ -74,7 +74,7 @@ t_fork	*ft_fork_init(t_simulation *simulation)
 {
 	t_fork	*forks;
 	int		i;
-	
+
 	i = 0;
 	forks = ft_save_malloc(sizeof(t_fork) * simulation->philo_numbers);
 	while (i < simulation->philo_numbers)
@@ -93,4 +93,3 @@ t_fork	*ft_fork_init(t_simulation *simulation)
 	ft_mutex_handle(simulation->death, INIT);
 	return (forks);
 }
- 

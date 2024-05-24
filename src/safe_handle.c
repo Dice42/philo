@@ -1,12 +1,12 @@
-     /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   safe_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 22:24:57 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/04/24 23:24:27 by mohammoh         ###   ########.fr       */
+/*   Created: 2024/05/25 01:42:32 by mohammoh          #+#    #+#             */
+/*   Updated: 2024/05/25 01:42:34 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	ft_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
 	}
 }
 
-void	 ft_thread_handle(pthread_t *thread, t_opcode opcode , void *(*routine)(void *), void *arg)
+void	ft_thread_handle(pthread_t *thread, t_opcode opcode,
+		void *(*routine)(void *), void *arg)
 {
 	if (opcode == CREATE)
 	{
@@ -56,13 +57,11 @@ void	 ft_thread_handle(pthread_t *thread, t_opcode opcode , void *(*routine)(voi
 	}
 	else if (opcode == JOIN)
 	{
-		//might need a pointer in the first arugment (thread)
 		if (pthread_join(*thread, NULL))
 			ft_panic("ERROR: THREAD JOIN FAILED\n", 0);
 	}
 	else if (opcode == DETACH)
 	{
-		//might need a pointer in the first arugment (thread)
 		if (pthread_detach(*thread))
 			ft_panic("ERROR: THREAD DETACH FAILED\n", 0);
 	}

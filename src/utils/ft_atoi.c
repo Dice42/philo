@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 22:47:52 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/19 14:37:30 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:13:15 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ long	ft_atoi(char *str)
 		flag = 0;
 	ret = ret_digit(str, i, &flag);
 	if (flag == 1)
-		return (-1); // do somthing here then return 0
+		return (-1);
 	return (ret);
 }

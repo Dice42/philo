@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:08:42 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/24 23:22:21 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:35:26 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	ft_eating(t_philo *philo)
 	sim->forks[philo->left_fork].is_picked = NO;
 	ft_mutex_handle(&sim->forks[philo->right_fork].mutex, UNLOCK);
 	ft_mutex_handle(&sim->forks[philo->left_fork].mutex, UNLOCK);
-} 
-
+}
 
 void	ft_sleeping(t_philo *philo)
 {
