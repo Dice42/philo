@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:38:31 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/23 20:29:52 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:48:16 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int set_max_eat(t_simulation *simulation, int num)
 	else if (num >= 1)
 		simulation->max_eat = num;
 	else
-		simulation->max_eat = -1;
+		simulation->max_eat = -4;
 	return 0;
 }
 
@@ -115,6 +115,8 @@ int			ft_parse(char **av, t_simulation *simulation)
 		else if (i == 5)
 			 set_max_eat(simulation, num);
 	}
+	if (av[5] == NULL)
+		simulation->max_eat = -4;
 	return (0);
 }
 

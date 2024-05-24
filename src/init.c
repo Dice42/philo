@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/23 17:28:06 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/24 22:53:31 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
  */
 void	assing_forks(t_philo *philo, t_simulation *simulation, int i)
 {
-	// t_fork	*forks;
-
-	// forks = simulation->forks;
 	if (i == 0)
 	{
 		philo[i].left_fork = simulation->philo_numbers - 1;
@@ -33,7 +30,6 @@ void	assing_forks(t_philo *philo, t_simulation *simulation, int i)
 		philo[i].left_fork = i - 1;
 		philo[i].right_fork = i;
 	}
-	// check last philsopher fork
 }
 /**
  * @brief this function will initialize the philo struct
@@ -51,8 +47,8 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 	simulation->threads = ft_save_malloc(sizeof(pthread_t) * simulation->philo_numbers);
 	simulation->forks = ft_fork_init(simulation);
 	philo = ft_save_malloc(sizeof(t_philo) * simulation->philo_numbers);
-	simulation->is_ready = 0;
 	simulation->start_flag = 0;
+	simulation->stop_simulation = 0;
 	while (i < simulation->philo_numbers)
 	{
 		philo[i].id = i + 1;
@@ -60,7 +56,7 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 		philo[i].next_meal = 0; // NEXT MEAL
 		philo[i].eat_counter = 0;
 		philo[i].is_dead = NO;
-		philo[i].has_both_forks = NO;
+		// philo[i].has_both_forks = NO;
 		philo[i].has_eaten = NO;
 		philo[i].max_eat = simulation->max_eat;
 		assing_forks(philo, simulation, i);

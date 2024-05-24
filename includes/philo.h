@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/23 20:29:28 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/24 23:21:27 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ typedef struct s_simulation
 	int					max_eat;
 	int					is_dead;
 	int					start_flag;
-	int					all_ready;
-	int					is_ready; // to start the simulation
 	int					current_eat;
 	size_t			*last_meal;
 	int					stop_simulation;
@@ -84,7 +82,6 @@ typedef struct s_philo
 	int				id;
 	int				right_fork;
 	int				left_fork;
-	int				has_both_forks;
 	int				has_eaten;
 	int				is_dead;
 	int				start;
@@ -102,8 +99,9 @@ int				ft_parse(char **av, t_simulation *simulation);
 //utils
 void			ft_putstr_fd(char *s, int fd);
 long			ft_atoi(char *str);
-void			ft_usleep(size_t ms);
+void			ft_usleep(size_t ms, t_simulation *sim);
 size_t			ft_time(void);
+void			ft_free(t_simulation *sim, t_philo *philo);
 
 //safe handle
 void			ft_thread_handle(pthread_t *thread, t_opcode opcode , void *(*routine)(void *), void *arg);
@@ -117,14 +115,15 @@ t_fork			*ft_fork_init(t_simulation *simulation);
 
 //simulation
 void			ft_start_simulation(t_philo *philo, t_simulation *simulation);
-void			odd_thread_routine(t_philo *philo, t_simulation *sim);
-void			even_thread_routine(t_philo *philo, t_simulation *sim);
-void			ft_print_message(t_philo *philo, t_simulation *simulation, int opcode, int fork_id);
+void			ft_print_message(t_philo *philo, t_simulation *simulation, int opcode);
 
 //Operations
-void			ft_thinking(t_philo *philo, t_simulation *sim);
-void			ft_sleeping(t_philo *philo, t_simulation *sim);
-void			ft_eating(t_philo *philo, t_simulation *sim);
-void			check_philosopher_deaths(t_simulation *sim);
+void			ft_thinking(t_philo *philo);
+void			ft_sleeping(t_philo *philo);
+void			ft_eating(t_philo *philo);
+void			check_philosopher_deaths(void *data);
+
+
+int				ft_check_death_status(t_simulation *sim);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:25:22 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/23 20:30:19 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/24 23:09:35 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,32 @@ char		*ft_message(int opcode)
 	return (NULL);
 }
 
-void		ft_print_message(t_philo *philo, t_simulation *simulation, int opcode, int fork_id) // still need to add mutex for stop in to not get a mutex
+void		ft_print_message(t_philo *philo, t_simulation *simulation, int opcode) // still need to add mutex for stop in to not get a mutex
 {
 	
 	ft_mutex_handle(simulation->message, LOCK);
-	if (opcode == DIED || opcode == DONE)
+	if (opcode == DIED)
 	{
 		ft_mutex_handle(simulation->stop, LOCK);
-		printf("time: %lu philo.id %d %s\n", ft_time() - simulation->start, philo->id, ft_message(opcode));
+		simulation->stop_simulation = 1;
 		ft_mutex_handle(simulation->stop, UNLOCK);
-		exit(1);
+		printf("time: %lu %d %s\n", ft_time() - simulation->start, philo->id, ft_message(opcode));
+		ft_mutex_handle(simulation->message, UNLOCK);
+		return ; 
 	}
-	else
-	printf("\ntime: %lu philo.id %d %s  {%d} \n", ft_time() - simulation->start, philo->id, ft_message(opcode), fork_id);
+	if (opcode == DONE)
+	{
+		ft_mutex_handle(simulation->stop, LOCK);
+		simulation->stop_simulation = 2;
+		printf("%lu %d %s\n", ft_time() - simulation->start, philo->id, ft_message(opcode));
+		ft_mutex_handle(simulation->stop, UNLOCK);
+		ft_mutex_handle(simulation->message, UNLOCK);
+		return ;
+	}
+	printf("%lu %d %s\n", ft_time() - simulation->start, philo->id, ft_message(opcode));
 	ft_mutex_handle(simulation->message, UNLOCK);
 }
+
 
 int			ft_panic(char *message, int ret)
 {

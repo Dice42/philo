@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:03:47 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/23 19:24:47 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/24 23:23:16 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ size_t	ft_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	ft_usleep(size_t ms)
+void	ft_usleep(size_t ms, t_simulation *sim)
 {
-
 	size_t	start;
 
-	//check if his time to die has finished then end the simulation
 	start = ft_time();
 	while ((ft_time() - start) < ms )
+	{
+		if (sim->stop_simulation == 1 || sim->stop_simulation == 2)
+			return ;
 		usleep(500);
+	}	
 }

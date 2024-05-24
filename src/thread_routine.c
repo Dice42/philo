@@ -6,30 +6,28 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:59:37 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/23 17:07:02 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:46:36 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/philo.h"
+#include "../includes/philo.h"
 
-int		has_both_forks(t_philo *philo)
+void	ft_free(t_simulation *sim, t_philo *philo)
 {
-	t_fork	*forks;
-	t_simulation	*sim;
+	int	i;
 
-	sim = philo->simulation;
-	forks = sim->forks;
-	if (philo->id % 2 == 0)
+	i = 0;
+	while (i < sim->philo_numbers)
 	{
-		if (forks[philo->right_fork].last_picked != philo->id
-			&& forks[philo->left_fork].last_picked != philo->id)
-			return (YES);
+		ft_mutex_handle(&sim->forks[i].mutex, DESTROY);
+		i++;
 	}
-	else
-	{
-		if (forks[philo->right_fork].last_picked != philo->id
-			&& forks[philo->left_fork].last_picked != philo->id)
-			return (YES);
-	}
-	return (NO);
+	free(sim->last_meal);
+	free(sim->forks);
+	free(sim->threads);
+	free(philo);
+	free(sim->message);
+	free(sim->stop);
+	free(sim->death);
+	
 }

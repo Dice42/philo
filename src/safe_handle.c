@@ -36,6 +36,7 @@ void	ft_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
 	}
 	else if (opcode == LOCK)
 	{
+		usleep(50);
 		if (pthread_mutex_lock(mutex))
 			ft_panic("ERROR: MUTEX LOCK FAILED\n", 0);
 	}
