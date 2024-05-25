@@ -6,12 +6,12 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 12:18:05 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 12:44:01 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
 # include <stdio.h>
 # include <pthread.h>
@@ -19,8 +19,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <limits.h>
-#include <stdbool.h>
-#include <sys/time.h>
+# include <stdbool.h>
+# include <sys/time.h>
 
 # define YES 1
 # define NO 0
@@ -43,15 +43,15 @@ typedef enum s_opcode
 	DETACH,
 	START,
 	ONGOING
-} t_opcode;
+}	t_opcode;
 
 typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
-	int		fork_id; // for debugging
-	int 	last_picked;
-	int		is_picked;
-} t_fork;
+	int				fork_id;
+	int				last_picked;
+	int				is_picked;
+}	t_fork;
 
 typedef struct s_simulation
 {
@@ -60,7 +60,6 @@ typedef struct s_simulation
 	pthread_mutex_t		*message;
 	pthread_mutex_t		*death;
 	pthread_mutex_t		*stop;
-	
 	size_t				start;
 	int					philo_numbers;
 	size_t				time_to_die;
@@ -86,11 +85,8 @@ typedef struct s_philo
 	int				eat_counter;
 	int				max_eat;
 	int				is_one;
-
-	//who picked it last
 	t_simulation	*simulation;
 }				t_philo;
-
 
 //parsing 
 int				ft_parse(char **av, t_simulation *simulation);
@@ -108,7 +104,8 @@ size_t			ft_time(void);
 void			ft_free(t_simulation *sim);
 
 //safe handle
-void			ft_thread_handle(pthread_t *thread, t_opcode opcode , void *(*routine)(void *), void *arg);
+void			ft_thread_handle(pthread_t *thread,
+					t_opcode opcode, void *(*routine)(void *), void *arg);
 void			ft_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode);
 void			*ft_save_malloc(size_t size);
 int				ft_panic(char *message, int ret);
@@ -118,8 +115,11 @@ t_philo			*ft_philo_init(t_simulation *simulation);
 t_fork			*ft_fork_init(t_simulation *simulation);
 
 //simulation
+void			*thread_routine(void *data);
+void			get_start_time(t_simulation *sim);
 void			ft_start_simulation(t_philo *philo, t_simulation *simulation);
-void			ft_print_message(t_philo *philo, t_simulation *simulation, int opcode);
+void			ft_print_message(t_philo *philo,
+					t_simulation *simulation, int opcode);
 
 //Operations
 void			ft_thinking(t_philo *philo);
@@ -127,6 +127,10 @@ void			ft_sleeping(t_philo *philo);
 void			ft_eating(t_philo *philo);
 void			check_philosopher_deaths(void *data);
 
+//get_fork
+void			ft_get_forks(t_philo *philo, t_simulation *sim);
+void			ft_get_forks2(int first_fork, int second_fork,
+					t_philo *philo, t_simulation *sim);
 
 int				ft_check_death_status(t_simulation *sim);
 

@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 01:19:24 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 11:09:58 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 12:24:42 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_print_message(t_philo *philo, t_simulation *simulation, int opcode)
 		ft_mutex_handle(simulation->message, UNLOCK);
 		return ;
 	}
-	else if (opcode == 	DONE)
+	else if (opcode == DONE)
 	{
 		ft_print_message2(philo, simulation, opcode);
 		return ;

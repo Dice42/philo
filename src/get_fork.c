@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   get_fork.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 14:14:05 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 12:26:58 by mohammoh         ###   ########.fr       */
+/*   Created: 2024/05/25 12:39:00 by mohammoh          #+#    #+#             */
+/*   Updated: 2024/05/25 12:39:37 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	main(int ac, char **av)
+void	ft_get_forks(t_philo *philo, t_simulation *sim)
 {
-	t_simulation	simulation;
-	t_philo			*philo;
+	int			first_fork;
+	int			second_fork;
 
-	philo = NULL;
-	if (ac == 5 || ac == 6)
+	if (philo->id % 2 != 0)
 	{
-		if (ft_parse(av, &simulation))
-			return (ft_putstr_fd("error parsing the values\n", 2), 0);
-		philo = ft_philo_init(&simulation);
-		ft_start_simulation(philo, &simulation);
-		free(philo);
-		ft_free(&simulation);
+		first_fork = philo->right_fork;
+		second_fork = philo->left_fork;
 	}
 	else
-		ft_putstr_fd("Error: wrong number of arguments\n", 2);
+	{
+		first_fork = philo->left_fork;
+		second_fork = philo->right_fork;
+		usleep(10);
+	}
+	if (ft_check_death_status(sim))
+		return ;
+	ft_get_forks2(first_fork, second_fork, philo, sim);
 }
