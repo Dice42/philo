@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 01:34:43 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 12:19:06 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 		philo[i].eating_time = simulation->time_to_eat;
 		philo[i].eat_counter = 0;
 		philo[i].has_eaten = NO;
+		philo[i].is_one = NO;
 		philo[i].max_eat = simulation->max_eat;
 		assing_forks(philo, simulation, i);
 		i++;

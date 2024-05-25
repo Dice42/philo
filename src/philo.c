@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:14:05 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 01:41:28 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 11:04:55 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	main(int ac, char **av)
 			return (ft_putstr_fd("error parsing the values\n", 2), 0);
 		philo = ft_philo_init(&simulation);
 		ft_start_simulation(philo, &simulation);
+		free(philo);
+		ft_free(&simulation);
 	}
 	else
 		ft_putstr_fd("Error: wrong number of arguments\n", 2);
-	free(philo);
-	ft_free(&simulation);
+
 }

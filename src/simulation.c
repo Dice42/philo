@@ -34,34 +34,40 @@ static void ft_get_forks2(int first_fork, int second_fork, t_philo *philo, t_sim
 		if(ft_check_death_status(sim))
 			return ;
 		ft_mutex_handle(&forks[first_fork].mutex, LOCK);
-		if (forks[first_fork].is_picked == NO 
-			&& forks[first_fork].last_picked != philo->id)
+		if (forks[first_fork].is_picked == NO && forks[first_fork].last_picked != philo->id)
 		{
 			forks[first_fork].is_picked = YES;
 			forks[first_fork].last_picked = philo->id;
+			if (ft_check_death_status(sim))
+						return ;
 			ft_print_message(philo, sim, FORK);
-			if (first_fork != second_fork)
+			if (first_fork == second_fork)
 			{
-				ft_mutex_handle(&forks[second_fork].mutex, LOCK);
-				if (forks[second_fork].is_picked == NO
-					&& forks[second_fork].last_picked != philo->id)
-				{
-					forks[second_fork].is_picked = YES;
-					forks[second_fork].last_picked = philo->id;
-					ft_print_message(philo, sim, FORK);
-					break;
-				}
-				else
-				{
-					forks[first_fork].is_picked = NO;
-					ft_mutex_handle(&forks[first_fork].mutex, UNLOCK);
-				}
+				ft_mutex_handle(&forks[first_fork].mutex, UNLOCK);
+				philo->is_one = YES;
+				break;
 			}
-			if (first_fork != second_fork)
-				ft_mutex_handle(&forks[second_fork].mutex, UNLOCK);
+			ft_mutex_handle(&forks[second_fork].mutex, LOCK);
+			if (forks[second_fork].is_picked == NO && forks[second_fork].last_picked != philo->id)
+			{
+				forks[second_fork].is_picked = YES;
+				forks[second_fork].last_picked = philo->id;
+				if (ft_check_death_status(sim))
+					return ;
+				ft_print_message(philo, sim, FORK);
+				break;
+			}
+			else
+			{
+				forks[first_fork].is_picked = NO;
+				ft_mutex_handle(&forks[first_fork].mutex, UNLOCK);
+			}
+			ft_mutex_handle(&forks[second_fork].mutex, UNLOCK);
 		}
 		else
 			ft_mutex_handle(&forks[first_fork].mutex, UNLOCK);
+		if (ft_check_death_status(sim))
+						return ;
 		usleep(50);
 	}
 }
@@ -81,6 +87,8 @@ static void	ft_get_forks(t_philo *philo, t_simulation *sim)
 		second_fork = philo->right_fork;
 		usleep(10);
 	}
+	if (ft_check_death_status(sim))
+		return ;
 	ft_get_forks2(first_fork, second_fork, philo, sim);
 }
 static void get_start_time(t_simulation *sim)
@@ -101,23 +109,22 @@ void *thread_routine(void *data)
 	philo = *(t_philo *)data;
 	sim = philo.simulation;
 	get_start_time(sim);
-	ft_mutex_handle(sim->stop, UNLOCK);
 	while (1)
 	{
 		if (!ft_check_death_status(sim))
 			ft_get_forks(&philo, sim);
 		if (ft_check_death_status(sim))
 			return (NULL);
-		if (!ft_check_death_status(sim))
+		if (!ft_check_death_status(sim) && !philo.is_one)
 			ft_eating(&philo);
-		if (philo.has_eaten == YES && !ft_check_death_status(sim))
+		if (ft_check_death_status(sim))
+			return (NULL);
+		if (philo.has_eaten == YES && !ft_check_death_status(sim) && !philo.is_one)
 			ft_sleeping(&philo);
 		if (ft_check_death_status(sim))
 			return (NULL);
-		if (!ft_check_death_status(sim))
+		if (!ft_check_death_status(sim )&& !philo.is_one)
 			ft_thinking(&philo);
-		if (ft_check_death_status(sim))
-			return (NULL);
 	}
 	return (NULL);
 } 

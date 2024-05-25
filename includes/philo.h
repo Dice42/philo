@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 14:13:03 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 01:37:11 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 12:18:05 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_simulation
 
 typedef struct s_philo
 {
-	unsigned int	eating_time;	
+	unsigned int	eating_time;
 	int				id;
 	int				right_fork;
 	int				left_fork;
@@ -85,6 +85,7 @@ typedef struct s_philo
 	int				start;
 	int				eat_counter;
 	int				max_eat;
+	int				is_one;
 
 	//who picked it last
 	t_simulation	*simulation;

@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:08:42 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 01:35:26 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/25 11:15:20 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	ft_eating(t_philo *philo)
 	philo->eat_counter++;
 	if (philo->eat_counter == philo->max_eat)
 	{
+		ft_mutex_handle(sim->stop, LOCK);
+		sim->stop_simulation = 2;
+		ft_mutex_handle(sim->stop, UNLOCK);
 		ft_mutex_handle(&sim->forks[philo->right_fork].mutex, UNLOCK);
 		ft_mutex_handle(&sim->forks[philo->left_fork].mutex, UNLOCK);
 		ft_print_message(philo, philo->simulation, DONE);
