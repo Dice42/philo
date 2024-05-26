@@ -6,12 +6,20 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:52:52 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 14:25:58 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:08:54 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * @brief ill create the philos and also the main thread will continoulsy be 
+ * running in a while (1) loop to check if the philos are dead or not
+ * before joining 
+ * 
+ * @param philo 
+ * @param simulation 
+ */
 void	ft_start_simulation(t_philo *philo, t_simulation *simulation)
 {
 	int	i;

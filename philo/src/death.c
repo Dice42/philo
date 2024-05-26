@@ -6,11 +6,29 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 21:06:46 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/26 11:24:20 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:11:18 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/**
+ * @brief check if the philosopher is dead or all the philosophers 
+ * are done eating. im call this function regulary everywhere
+ * @param sim 
+ * @return 1 if dead or done 0 if not
+ */
+int	ft_check_death_status(t_simulation *sim)
+{
+	ft_mutex_handle(sim->done, LOCK);
+	if (sim->stop_simulation == 1 || sim->all_done == sim->philo_numbers)
+	{
+		ft_mutex_handle(sim->done, UNLOCK);
+		return (1);
+	}
+	ft_mutex_handle(sim->done, UNLOCK);
+	return (0);
+}
 
 /**
  * @brief this is my monitor function that checks if the philosopher

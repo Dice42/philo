@@ -6,12 +6,17 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 01:42:32 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 01:42:34 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:10:27 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * @brief save malloc function to handle malloc errors
+ * @param size 
+ * @return 
+ */
 void	*ft_save_malloc(size_t size)
 {
 	void	*ptr;
@@ -22,6 +27,12 @@ void	*ft_save_malloc(size_t size)
 	return (ptr);
 }
 
+/**
+ * @brief  mutex function handler will handle all the mutex operations
+ * just to make it simpler in the code
+ * @param mutex 
+ * @param opcode init, destroy, lock, unlock
+ */
 void	ft_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
 {
 	if (opcode == INIT)
@@ -47,6 +58,14 @@ void	ft_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
 	}
 }
 
+/**
+ * @brief thread handler will handle all the thread operations
+ * just to make it simpler in the code
+ * @param thread 
+ * @param opcode create, join, detach
+ * @param routine 
+ * @param arg 
+ */
 void	ft_thread_handle(pthread_t *thread, t_opcode opcode,
 		void *(*routine)(void *), void *arg)
 {

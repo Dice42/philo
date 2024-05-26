@@ -6,12 +6,21 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:08:42 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 20:36:34 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:01:23 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * @brief philo starts eating here updating the time of the last meal 
+ * also incrementing the eat counter and an integer if it finishes 
+ * the required meal, note that a philo wont stop eating if finishes 
+ * the required meal eating
+ * itll only will stop when all the philos finish their
+ * and lastly ill unlock the forks before sleeping
+ * @param philo 
+ */
 void	ft_eating(t_philo *philo)
 {
 	t_simulation	*sim;
@@ -37,6 +46,10 @@ void	ft_eating(t_philo *philo)
 	ft_mutex_handle(&sim->forks[philo->left_fork].mutex, UNLOCK);
 }
 
+/**
+ * @brief philo starts sleeping with required time to sleep
+ * @param philo 
+ */
 void	ft_sleeping(t_philo *philo)
 {
 	ft_print_message(philo, philo->simulation, SLEEPING);

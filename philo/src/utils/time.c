@@ -6,11 +6,22 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:03:47 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 20:30:26 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:04:22 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo.h"
+
+void	get_start_time(t_simulation *sim)
+{
+	ft_mutex_handle(sim->stop, LOCK);
+	if (sim->start_flag != 1)
+	{
+		sim->start = ft_time();
+		sim->start_flag = 1;
+	}
+	ft_mutex_handle(sim->stop, UNLOCK);
+}
 
 size_t	ft_time(void)
 {

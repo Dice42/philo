@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/26 11:34:20 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 12:55:25 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ static t_fork	*ft_fork_init(t_simulation *simulation)
 /**
  * @brief this function will initialize the philo struct
  * @param simulation  
- * @return t_philo* 
+ * @return t_philo
  */
 t_philo	*ft_philo_init(t_simulation *simulation)
 {
 	t_philo	*philo;
 	int		i;
 
-	i = 0;
+	i = -1;
 	simulation->threads = ft_save_malloc(sizeof(pthread_t) 
 			* simulation->philo_numbers);
 	simulation->forks = ft_fork_init(simulation);
@@ -79,7 +79,7 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 	simulation->start_flag = 0;
 	simulation->stop_simulation = 0;
 	simulation->all_done = 0;
-	while (i < simulation->philo_numbers)
+	while (++i < simulation->philo_numbers)
 	{
 		philo[i].id = i + 1;
 		philo[i].eating_time = simulation->time_to_eat;
@@ -88,7 +88,6 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 		philo[i].is_one = NO;
 		philo[i].max_eat = simulation->max_eat;
 		assing_forks(philo, simulation, i);
-		i++;
 	}
 	return (philo);
 }

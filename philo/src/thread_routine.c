@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation_utils.c                                 :+:      :+:    :+:   */
+/*   thread_routine.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:36:42 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 20:37:00 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:07:25 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
+/**
+ * @brief the routine where all the majic happenes
+ * ill get the first philosopher starts will get the the starting time
+ * @param data 
+ * @return void* 
+ */
 void	*thread_routine(void *data)
 {
 	t_philo			philo;
@@ -39,27 +44,4 @@ void	*thread_routine(void *data)
 			ft_thinking(&philo);
 	}
 	return (NULL);
-}
-
-void	get_start_time(t_simulation *sim)
-{
-	ft_mutex_handle(sim->stop, LOCK);
-	if (sim->start_flag != 1)
-	{
-		sim->start = ft_time();
-		sim->start_flag = 1;
-	}
-	ft_mutex_handle(sim->stop, UNLOCK);
-}
-
-int	ft_check_death_status(t_simulation *sim)
-{
-	ft_mutex_handle(sim->done, LOCK);
-	if (sim->stop_simulation == 1 || sim->all_done == sim->philo_numbers)
-	{
-		ft_mutex_handle(sim->done, UNLOCK);
-		return (1);
-	}
-	ft_mutex_handle(sim->done, UNLOCK);
-	return (0);
 }

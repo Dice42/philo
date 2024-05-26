@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:39:00 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/26 11:32:58 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 12:53:24 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ static void	ft_get_forks2(int first_fork, int second_fork,
 /**
  * @brief getting forks for the philosopher by letting the odd philos to pick
  * the right fork first and the even philos to pick the left fork first and
- * ill give a head start for the odds
+ * ill give a head start for the odds philos and they wont leave the loop until
+ * each pick up the fork 
  * @param philo 
  * @param sim 
  */
