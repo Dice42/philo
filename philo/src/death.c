@@ -6,12 +6,17 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 21:06:46 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 20:35:48 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 11:24:20 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * @brief this is my monitor function that checks if the philosopher
+ * dies or all the philosophers are done eating
+ * @param data contains the philosopher structure
+ */
 void	check_philosopher_deaths(void *data)
 {
 	t_philo			*philo;

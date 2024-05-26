@@ -6,19 +6,19 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:08:27 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 20:37:49 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 11:34:20 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-/** still need work
+/**
  * @brief this function will assign the forks to the philo
  * 
  * @param philo 
  * @param simulation 
  * @param i 
  */
-void	assing_forks(t_philo *philo, t_simulation *simulation, int i)
+static void	assing_forks(t_philo *philo, t_simulation *simulation, int i)
 {
 	if (i == 0)
 	{
@@ -33,9 +33,36 @@ void	assing_forks(t_philo *philo, t_simulation *simulation, int i)
 }
 
 /**
- * @brief this function will initialize the philo struct
+ * @brief this function will initialize the fork struct
  * 
- *
+ * @param simulation
+ * @return 
+ */
+static t_fork	*ft_fork_init(t_simulation *simulation)
+{
+	t_fork	*forks;
+	int		i;
+
+	i = 0;
+	forks = ft_save_malloc(sizeof(t_fork) * simulation->philo_numbers);
+	while (i < simulation->philo_numbers)
+	{
+		forks[i].last_picked = -1;
+		forks[i].is_picked = NO;
+		ft_mutex_handle(&forks[i].mutex, INIT);
+		i++;
+	}
+	simulation->message = ft_save_malloc(sizeof(pthread_mutex_t));
+	simulation->stop = ft_save_malloc(sizeof(pthread_mutex_t));
+	simulation->done = ft_save_malloc(sizeof(pthread_mutex_t));
+	ft_mutex_handle(simulation->message, INIT);
+	ft_mutex_handle(simulation->stop, INIT);
+	ft_mutex_handle(simulation->done, INIT);
+	return (forks);
+}
+
+/**
+ * @brief this function will initialize the philo struct
  * @param simulation  
  * @return t_philo* 
  */
@@ -64,34 +91,4 @@ t_philo	*ft_philo_init(t_simulation *simulation)
 		i++;
 	}
 	return (philo);
-}
-
-/**
- * @brief this function will initialize the fork struct
- * 
- * @param simulation
- * @return 
- */
-t_fork	*ft_fork_init(t_simulation *simulation)
-{
-	t_fork	*forks;
-	int		i;
-
-	i = 0;
-	forks = ft_save_malloc(sizeof(t_fork) * simulation->philo_numbers);
-	while (i < simulation->philo_numbers)
-	{
-		forks[i].fork_id = i;
-		forks[i].last_picked = -1;
-		forks[i].is_picked = NO;
-		ft_mutex_handle(&forks[i].mutex, INIT);
-		i++;
-	}
-	simulation->message = ft_save_malloc(sizeof(pthread_mutex_t));
-	simulation->stop = ft_save_malloc(sizeof(pthread_mutex_t));
-	simulation->done = ft_save_malloc(sizeof(pthread_mutex_t));
-	ft_mutex_handle(simulation->message, INIT);
-	ft_mutex_handle(simulation->stop, INIT);
-	ft_mutex_handle(simulation->done, INIT);
-	return (forks);
 }

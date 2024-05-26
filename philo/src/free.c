@@ -6,12 +6,16 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:59:37 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 20:37:43 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 11:24:36 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * @brief this function frees all the memory that was allocated
+ * @param sim contains the simulation structure
+ */
 void	ft_free(t_simulation *sim)
 {
 	int	i;

@@ -21,7 +21,7 @@ OBJECTS = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -pthread  -g3
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread  -g3
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: mohammoh <mohammoh@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:39:00 by mohammoh          #+#    #+#             */
-/*   Updated: 2024/05/25 20:04:40 by mohammoh         ###   ########.fr       */
+/*   Updated: 2024/05/26 11:32:58 by mohammoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static bool	ft_get_forks2_utils(int f1, int f2, t_philo *ph, t_simulation *sim)
 	return (false);
 }
 
-bool	ft_get_forks2_helper(int f1, int f2, t_philo *ph, t_simulation *sim)
+static bool	ft_get_forks2_helper(int f1, int f2, t_philo *ph, t_simulation *sim)
 {
 	if (ft_get_forks2_utils(f1, f2, ph, sim))
 		return (true);
@@ -62,7 +62,7 @@ bool	ft_get_forks2_helper(int f1, int f2, t_philo *ph, t_simulation *sim)
 	return (ft_mutex_handle(&sim->forks[f2].mutex, UNLOCK), false);
 }
 
-void	ft_get_forks2(int first_fork, int second_fork,
+static void	ft_get_forks2(int first_fork, int second_fork,
 		t_philo *philo, t_simulation *sim)
 {
 	t_fork	*forks;
@@ -87,6 +87,13 @@ void	ft_get_forks2(int first_fork, int second_fork,
 	}
 }
 
+/**
+ * @brief getting forks for the philosopher by letting the odd philos to pick
+ * the right fork first and the even philos to pick the left fork first and
+ * ill give a head start for the odds
+ * @param philo 
+ * @param sim 
+ */
 void	ft_get_forks(t_philo *philo, t_simulation *sim)
 {
 	int			first_fork;
